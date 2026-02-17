@@ -157,3 +157,38 @@ def test_websocket_tts_endpoint_not_enabled(tmp_path):
         error_msg = ws.receive_json()
         assert error_msg["type"] == "error"
         assert error_msg["error"] == "tts_not_enabled"
+
+
+def test_voice_turn_endpoint_streams_tts(tmp_path):
+    """POST /v1/voice/turn with response_text streams PCM audio back."""
+    app = create_app(
+        sqlite_path=str(tmp_path / "stt.db"),
+        asr_service=_FakeASR(),
+        tts_service=_FakeTTS(),
+    )
+    client = TestClient(app)
+
+    with client.stream(
+        "POST",
+        "/v1/voice/turn",
+        json={"session_id": "mac-1", "text": "오늘 날씨 어때?", "response_text": "서울 날씨는 맑습니다."},
+    ) as resp:
+        assert resp.status_code == 200
+        body = b"".join(resp.iter_bytes())
+        assert len(body) > 0
+
+
+def test_voice_turn_endpoint_returns_503_without_tts(tmp_path):
+    """POST /v1/voice/turn returns 503 when TTS not configured."""
+    app = create_app(
+        sqlite_path=str(tmp_path / "stt.db"),
+        asr_service=_FakeASR(),
+        tts_service=None,
+    )
+    client = TestClient(app)
+
+    resp = client.post(
+        "/v1/voice/turn",
+        json={"session_id": "mac-1", "text": "test", "response_text": "test response"},
+    )
+    assert resp.status_code == 503

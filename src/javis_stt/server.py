@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import ClassVar, override
 
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from .ambient_service import AmbientSoundService
@@ -110,6 +111,12 @@ class HallucinationConfigUpdate(BaseModel):
     replace: bool = False
 
 
+class VoiceTurnRequest(BaseModel):
+    session_id: str
+    text: str           # user's transcribed speech (for logging)
+    response_text: str  # AI response text from Mac — this gets synthesized
+
+
 def create_app(
     sqlite_path: str,
     asr_service=None,
@@ -157,6 +164,23 @@ def create_app(
             payload.replace,
         )
         return {"status": "ok", **result}
+
+    @app.post("/v1/voice/turn")
+    async def voice_turn(request: VoiceTurnRequest):
+        if app.state.tts_service is None:
+            raise HTTPException(status_code=503, detail="tts_not_enabled")
+
+        def generate_audio():
+            yield from app.state.tts_service.synthesize_stream(request.response_text)
+
+        return StreamingResponse(
+            generate_audio(),
+            media_type="application/octet-stream",
+            headers={
+                "X-Session-Id": request.session_id,
+                "X-Content-Type": "audio/pcm",
+            },
+        )
 
     @app.websocket("/ws/tts")
     async def websocket_tts(websocket: WebSocket):
