@@ -122,6 +122,8 @@ class AIGateway:
             "messages": messages,
             "stream": False,
         }
+        if self.enable_thinking:
+            payload["extra_body"] = {"chat_template_kwargs": {"enable_thinking": True}}
 
         last_error: str | None = None
         for _ in range(self.max_retries + 1):

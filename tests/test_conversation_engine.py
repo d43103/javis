@@ -1,4 +1,3 @@
-from collections import deque
 from src.javis_stt.conversation_engine import ConversationEngine
 from src.javis_stt.ai_gateway import AIResult
 
