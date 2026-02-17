@@ -69,6 +69,7 @@ class VoiceBridge:
         tts_sample_rate: int = 24000,   # TTS 서버가 24kHz 출력
         chunk_ms: int = 80,
         device: str | None = None,
+        idle_flush_seconds: float = 1.5,  # final 후 이 시간 침묵하면 AI 호출
     ):
         self.ws_url = _build_ws_url(server, session_id)
         self.http_base = _build_http_base(server)
@@ -78,7 +79,10 @@ class VoiceBridge:
         self.tts_sample_rate = tts_sample_rate
         self.chunk_ms = chunk_ms
         self.device = device
+        self.idle_flush_seconds = idle_flush_seconds
         self._history: deque[dict[str, str]] = deque(maxlen=max_turns * 2)
+        self._pending_texts: list[str] = []
+        self._flush_task: asyncio.Task | None = None
 
         import anthropic
         self._claude = anthropic.Anthropic()
@@ -170,8 +174,23 @@ class VoiceBridge:
                 payload = await queue.get()
                 await ws.send(payload)
 
+    async def _flush_pending(self) -> None:
+        """축적된 final 텍스트를 합쳐서 Claude 호출 후 TTS 재생."""
+        merged = " ".join(self._pending_texts).strip()
+        self._pending_texts.clear()
+        if not merged:
+            return
+        print()  # partial 표시 줄 넘김
+        logger.info("flush_pending text=%s", merged[:200])
+        await asyncio.to_thread(self._handle_final, merged)
+
+    async def _schedule_flush(self) -> None:
+        """idle_flush_seconds 후에 flush를 실행하는 타이머."""
+        await asyncio.sleep(self.idle_flush_seconds)
+        await self._flush_pending()
+
     async def _event_receiver(self, ws) -> None:
-        """서버에서 STT 이벤트를 수신합니다."""
+        """서버에서 STT 이벤트를 수신합니다. final 이벤트를 축적 후 침묵 감지 시 flush."""
         async for message in ws:
             if not isinstance(message, str):
                 continue
@@ -184,8 +203,11 @@ class VoiceBridge:
             if event_type == "final":
                 text = event.get("text", "").strip()
                 if text:
-                    # blocking 작업(Claude + TTS)을 별도 스레드에서 실행
-                    await asyncio.to_thread(self._handle_final, text)
+                    self._pending_texts.append(text)
+                    # 이전 타이머 취소 → 새 타이머 시작 (debounce)
+                    if self._flush_task and not self._flush_task.done():
+                        self._flush_task.cancel()
+                    self._flush_task = asyncio.create_task(self._schedule_flush())
             elif event_type == "partial":
                 text = event.get("text", "")
                 if text:
@@ -245,6 +267,7 @@ def main() -> None:
     parser.add_argument("--model", default="claude-haiku-4-5-20251001", help="Claude model ID")
     parser.add_argument("--max-turns", type=int, default=10, help="대화 히스토리 깊이")
     parser.add_argument("--chunk-ms", type=int, default=80, help="마이크 청크 크기 (ms)")
+    parser.add_argument("--idle-flush", type=float, default=1.5, help="침묵 후 AI 호출까지 대기 시간 (초)")
     parser.add_argument("--device", default=None, help="입력 장치 인덱스 또는 이름")
     parser.add_argument("--list-devices", action="store_true", help="입력 장치 목록 출력")
     args = parser.parse_args()
@@ -261,6 +284,7 @@ def main() -> None:
         max_turns=args.max_turns,
         chunk_ms=args.chunk_ms,
         device=args.device,
+        idle_flush_seconds=args.idle_flush,
     )
     bridge.run()
 

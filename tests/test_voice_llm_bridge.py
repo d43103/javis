@@ -2,6 +2,7 @@
 Tests for voice_llm_bridge — all network calls are replaced with fakes.
 sounddevice import is mocked so tests run without audio hardware.
 """
+import asyncio
 import sys
 import types
 
@@ -111,3 +112,75 @@ def test_bridge_trims_history_at_max_turns():
 
     # max_turns=3 → max 6 messages in history
     assert len(b._history) <= 6
+
+
+def test_idle_flush_merges_pending_texts():
+    """idle_flush: 여러 final 텍스트가 합쳐져서 한 번에 Claude 호출되는지 확인."""
+    _make_fake_anthropic("통합 응답")
+
+    import importlib
+    bridge = importlib.import_module("src.voice_llm_bridge")
+
+    calls = []
+
+    class FakeBridge(bridge.VoiceBridge):
+        def _post_tts_and_play(self, response_text):
+            pass
+
+        def _handle_final(self, text):
+            calls.append(text)
+            super()._handle_final(text)
+
+    b = FakeBridge(
+        server="ws://fake:8765",
+        session_id="test",
+        idle_flush_seconds=0.2,
+    )
+    b._pending_texts.extend(["오늘", "날씨", "어때?"])
+
+    asyncio.run(b._flush_pending())
+
+    assert len(calls) == 1
+    assert calls[0] == "오늘 날씨 어때?"
+    assert len(b._pending_texts) == 0
+
+
+def test_idle_flush_debounce():
+    """빠르게 들어오는 final 이벤트가 debounce 되는지 확인."""
+    _make_fake_anthropic("응답")
+
+    import importlib
+    bridge = importlib.import_module("src.voice_llm_bridge")
+
+    flush_count = []
+
+    class FakeBridge(bridge.VoiceBridge):
+        def _post_tts_and_play(self, response_text):
+            pass
+
+        def _handle_final(self, text):
+            flush_count.append(text)
+            super()._handle_final(text)
+
+    async def run_debounce():
+        b = FakeBridge(
+            server="ws://fake:8765",
+            session_id="test",
+            idle_flush_seconds=0.3,
+        )
+        # 3개 final을 빠르게 추가 — 각각 타이머 리셋
+        for word in ["안녕", "하세요", "잘 지내세요?"]:
+            b._pending_texts.append(word)
+            if b._flush_task and not b._flush_task.done():
+                b._flush_task.cancel()
+            b._flush_task = asyncio.create_task(b._schedule_flush())
+            await asyncio.sleep(0.05)
+
+        # 0.3초 대기 후 flush 실행
+        await asyncio.sleep(0.5)
+        return flush_count
+
+    result = asyncio.run(run_debounce())
+    # debounce: 3개가 합쳐져서 1번만 호출
+    assert len(result) == 1
+    assert "잘 지내세요?" in result[0]
