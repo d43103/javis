@@ -69,3 +69,19 @@ def test_tts_streaming_server_speech_endpoint():
         assert resp.status_code == 200
         body = b"".join(resp.iter_bytes())
         assert len(body) > 0
+
+
+def test_speech_endpoint_rejects_empty_input():
+    _make_fake_qwen3_streaming()
+    from fastapi.testclient import TestClient
+    tts_mod = importlib.import_module("src.javis_tts.tts_streaming_server")
+    create_tts_app = tts_mod.create_tts_app
+    app = create_tts_app(
+        model=object(),
+        tokenizer=object(),
+        ref_audio_path="fake.wav",
+        ref_text="테스트",
+    )
+    client = TestClient(app)
+    resp = client.post("/v1/audio/speech", json={"input": "   "})
+    assert resp.status_code == 400

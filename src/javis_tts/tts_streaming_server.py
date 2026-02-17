@@ -8,7 +8,7 @@ import importlib
 import logging
 from typing import Any
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
@@ -42,7 +42,7 @@ def create_tts_app(
     @app.post("/v1/audio/speech")
     async def speech(request: SpeechRequest):
         if not request.input.strip():
-            return {"error": "empty_input"}, 400
+            raise HTTPException(status_code=400, detail="empty_input")
 
         def generate():
             try:
@@ -58,6 +58,7 @@ def create_tts_app(
                     yield chunk
             except Exception:
                 logger.exception("tts_stream_error text=%s", request.input[:80])
+                raise
 
         return StreamingResponse(generate(), media_type="application/octet-stream")
 
