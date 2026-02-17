@@ -22,6 +22,13 @@ from collections import deque
 
 logger = logging.getLogger("javis.bridge")
 
+# ANSI 색상 코드
+_CYAN = "\033[96m"    # STT final
+_GREEN = "\033[92m"   # Claude response
+_YELLOW = "\033[93m"  # TTS 상태
+_DIM = "\033[2m"      # 부가 정보
+_RESET = "\033[0m"
+
 SYSTEM_PROMPT = """당신은 친근하고 간결한 한국어 개인 비서입니다.
 음성 대화에 최적화되어 있으므로 답변을 1-2 문장으로 짧게 유지하세요.
 마크다운, 목록, 코드 블록을 사용하지 마세요.
@@ -83,6 +90,7 @@ class VoiceBridge:
         self._history: deque[dict[str, str]] = deque(maxlen=max_turns * 2)
         self._pending_texts: list[str] = []
         self._flush_task: asyncio.Task | None = None
+        self._mic_muted = False  # TTS 재생 중 마이크 음소거 (에코 방지)
 
         import anthropic
         self._claude = anthropic.Anthropic()
@@ -126,13 +134,22 @@ class VoiceBridge:
 
     def _handle_final(self, text: str) -> None:
         logger.info("stt_final text=%s", text[:100])
+        print(f"\n{_CYAN}USER: {text}{_RESET}")
         try:
             response_text = self._call_claude(text)
             self._history.append({"role": "user", "content": text})
             self._history.append({"role": "assistant", "content": response_text})
             logger.info("claude_response text=%s", response_text[:100])
-            self._post_tts_and_play(response_text)
+            print(f"{_GREEN}  AI: {response_text}{_RESET}")
+            print(f"{_YELLOW}  🔊 재생 중...{_RESET}", end="", flush=True)
+            self._mic_muted = True
+            try:
+                self._post_tts_and_play(response_text)
+            finally:
+                self._mic_muted = False
+            print(f"\r{_YELLOW}  🔊 재생 완료   {_RESET}")
         except Exception:
+            self._mic_muted = False
             logger.exception("handle_final_error text=%s", text[:80])
 
     async def _mic_sender(self, ws) -> None:
@@ -162,6 +179,8 @@ class VoiceBridge:
         logger.info("mic_start device=%s mic_rate=%s tts_rate=%s chunk_ms=%s",
                     device_index, self.mic_sample_rate, self.tts_sample_rate, self.chunk_ms)
 
+        silence = bytes(chunk_frames * channels * bytes_per_sample)
+
         with sd.RawInputStream(
             samplerate=self.mic_sample_rate,
             channels=channels,
@@ -172,7 +191,11 @@ class VoiceBridge:
         ):
             while True:
                 payload = await queue.get()
-                await ws.send(payload)
+                # TTS 재생 중에는 무음 전송 (에코 피드백 방지)
+                if self._mic_muted:
+                    await ws.send(silence)
+                else:
+                    await ws.send(payload)
 
     async def _flush_pending(self) -> None:
         """축적된 final 텍스트를 합쳐서 Claude 호출 후 TTS 재생."""
