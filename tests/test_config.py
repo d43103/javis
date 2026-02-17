@@ -78,3 +78,34 @@ def test_backward_compat_no_tts_section(tmp_path):
 
     assert cfg.tts.enabled is False
     assert cfg.ai.api_format == "ollama"
+
+
+def test_tts_config_has_voice_clone_fields():
+    from src.javis_stt.config import TTSConfig
+    cfg = TTSConfig(
+        enabled=True,
+        model="Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+        voice="test01",
+        voice_clone_ref_audio="recordings/test-01.wav",
+        voice_clone_ref_text="처리하고 합니다.",
+    )
+    assert cfg.voice_clone_ref_audio == "recordings/test-01.wav"
+    assert cfg.voice_clone_ref_text == "처리하고 합니다."
+
+
+def test_ai_config_disabled_and_tts_voice_clone_yaml(tmp_path):
+    from src.javis_stt.config import load_config
+    yaml_content = """
+ai:
+  enabled: false
+tts:
+  enabled: true
+  voice_clone_ref_audio: recordings/test-01.wav
+  voice_clone_ref_text: "처리하고 합니다."
+"""
+    p = tmp_path / "stt.yaml"
+    p.write_text(yaml_content)
+    cfg = load_config(str(p))
+    assert cfg.ai.enabled is False
+    assert cfg.tts.voice_clone_ref_audio == "recordings/test-01.wav"
+    assert cfg.tts.voice_clone_ref_text == "처리하고 합니다."

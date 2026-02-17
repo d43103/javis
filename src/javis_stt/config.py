@@ -99,6 +99,8 @@ class TTSConfig(BaseModel):
     timeout_seconds: float = 30.0
     streaming: bool = True
     chunk_size: int = 4096
+    voice_clone_ref_audio: str = ""   # path to reference WAV (16kHz mono)
+    voice_clone_ref_text: str = ""    # transcript of reference audio
 
 
 class AmbientConfig(BaseModel):
