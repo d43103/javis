@@ -177,9 +177,12 @@ def create_app(
         )
 
         async def generate_audio():
-            for chunk in await asyncio.to_thread(
-                lambda: list(app.state.tts_service.synthesize_stream(request.response_text))
-            ):
+            # 청크가 생성될 때마다 즉시 전송 (list()로 모으지 않음)
+            gen = app.state.tts_service.synthesize_stream(request.response_text)
+            while True:
+                chunk = await asyncio.to_thread(next, gen, None)
+                if chunk is None:
+                    break
                 yield chunk
 
         return StreamingResponse(

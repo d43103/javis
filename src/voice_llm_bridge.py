@@ -65,7 +65,7 @@ class VoiceBridge:
         session_id: str,
         claude_model: str = "claude-haiku-4-5-20251001",
         max_turns: int = 10,
-        sample_rate: int = 16000,
+        sample_rate: int = 24000,
         chunk_ms: int = 80,
         device: str | None = None,
     ):
@@ -96,7 +96,6 @@ class VoiceBridge:
         import numpy as np
         import sounddevice as sd
 
-        pcm_chunks: list[bytes] = []
         with httpx.Client(timeout=30.0) as client:
             with client.stream(
                 "POST",
@@ -108,14 +107,16 @@ class VoiceBridge:
                 },
             ) as resp:
                 resp.raise_for_status()
-                for chunk in resp.iter_bytes(chunk_size=4096):
-                    if chunk:
-                        pcm_chunks.append(chunk)
-
-        if pcm_chunks:
-            raw = b"".join(pcm_chunks)
-            audio = np.frombuffer(raw, dtype=np.int16).astype(np.float32) / 32768.0
-            sd.play(audio, samplerate=self.sample_rate, blocking=True)
+                # 청크가 도착하는 즉시 재생 (버퍼링 없이)
+                with sd.OutputStream(
+                    samplerate=self.sample_rate,
+                    channels=1,
+                    dtype="float32",
+                ) as stream:
+                    for chunk in resp.iter_bytes(chunk_size=4096):
+                        if chunk:
+                            audio = np.frombuffer(chunk, dtype=np.int16).astype(np.float32) / 32768.0
+                            stream.write(audio)
 
     def _handle_final(self, text: str) -> None:
         logger.info("stt_final text=%s", text[:100])
