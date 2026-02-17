@@ -1,2 +1,5 @@
-websockets
+anthropic
+httpx
 sounddevice
+numpy
+websocket-client
