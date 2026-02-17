@@ -1,0 +1,10 @@
+[
+  {
+    "id": "sample-01",
+    "reference": "지금 잘 녹음이 되고 있는지 모르겠네요. 인식이 잘 되는지 모르겠어요.",
+    "systems": {
+      "whisper-turbo": "",
+      "voxtral-mini-4b-realtime": ""
+    }
+  }
+]

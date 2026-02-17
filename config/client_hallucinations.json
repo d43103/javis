@@ -1,0 +1,17 @@
+{
+  "exact_phrases": [
+    "아멘",
+    "아멘.",
+    "아멘, 다음 영상에서 만나요.",
+    "시청해주셔서",
+    "시청해주셔서 감사합니다.",
+    "한글자막 by 한효정"
+  ],
+  "contains_phrases": [
+    "다음 영상에서 만나요",
+    "자막 제공",
+    "subtitle by",
+    "thank you for watching"
+  ],
+  "replace": false
+}

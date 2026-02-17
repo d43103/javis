@@ -1,0 +1,104 @@
+stt:
+  provider: qwen3_asr_vllm
+  model_size: turbo
+  compute_type: float16
+  language: ko
+  beam_size: 5
+  remote_base_url: http://127.0.0.1:8021
+  remote_model: Qwen/Qwen3-ASR-0.6B
+  remote_timeout_seconds: 60.0
+  remote_realtime_path: /v1/realtime
+  remote_realtime_chunk_bytes: 4096
+  condition_on_previous_text: false
+  vad_filter: true
+  whisper_vad_filter: false
+  temperature: 0.0
+  no_speech_threshold: 0.2
+  log_prob_threshold: -1.1
+  compression_ratio_threshold: 1.8
+  min_segment_duration_seconds: 1.3
+  segment_min_avg_logprob: -1.2
+  segment_max_no_speech_prob: 0.9
+  repeated_text_window_seconds: 4.0
+  repeated_text_logprob_threshold: -0.25
+  pre_roll_ms: 600
+  hallucination_max_confidence: -0.15
+  hallucination_exact_phrases:
+    - 시청해주셔서
+    - 시청해 주셔서
+    - 시청해주셔서 감사합니다.
+    - 시청해 주셔서 감사합니다.
+    - 구독과 좋아요 부탁드립니다.
+    - 구독과 좋아요 부탁드려요.
+    - 좋아요와 구독 부탁드립니다.
+    - 좋아요 구독 부탁드립니다.
+    - 좋아요와 구독 그리고 알림설정 부탁드립니다.
+    - 감사합니다.
+    - 감사합니다
+    - 한글자막 by 한효정
+    - 한글 자막 by 한효정
+    - 자막 제공 배달의민족
+    - 아멘.
+    - 아멘
+    - 아멘, 다음 영상에서 만나요.
+    - 아멘 다음 영상에서 만나요.
+    - 다음 영상에서 만나요.
+    - english subtitles by
+    - subtitles by
+    - thank you for watching
+    - please subscribe
+    - like and subscribe
+    - don't forget to subscribe
+  hallucination_always_block_contains:
+    - 한글자막 by
+    - 한글 자막 by
+    - 자막 제공
+    - subtitle by
+    - subtitles by
+    - 아멘
+    - thank you for watching
+    - like and subscribe
+    - 다음 영상에서 만나요
+
+vad:
+  min_silence_duration_ms: 420
+  speech_pad_ms: 520
+
+ai:
+  enabled: true
+  api_format: openai
+  base_url: http://127.0.0.1:8041
+  model: Qwen/Qwen3-14B-AWQ
+  timeout_seconds: 20
+  max_retries: 1
+  keep_alive: 0s
+  context_turn_limit: 10
+  idle_flush_seconds: 2.1
+  idle_flush_requires_sentence_end: true
+  max_utterance_hold_seconds: 6.0
+  system_prompt: ""
+  enable_thinking: false
+
+tts:
+  enabled: true
+  provider: vllm
+  base_url: http://127.0.0.1:8031
+  model: Qwen/Qwen3-TTS-0.6B
+  voice: Sohee
+  sample_rate: 24000
+  timeout_seconds: 30.0
+  streaming: true
+  chunk_size: 4096
+
+ambient:
+  enabled: true
+  model_id: MIT/ast-finetuned-audioset-10-10-0.4593
+  confidence_threshold: 0.45
+  top_k: 2
+  min_emit_interval_seconds: 1.5
+
+db:
+  sqlite_path: data/javis_stt.db
+
+logging:
+  dialogue_log_path: logs/dialogue.log

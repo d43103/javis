@@ -1,0 +1,22 @@
+[
+  {
+    "sample_id": "smoke",
+    "model": "turbo",
+    "cer": 0.0,
+    "reference_len": 15,
+    "hypothesis_len": 15,
+    "hallucination_hits": [],
+    "reference": "안녕하세요 테스트 문장입니다",
+    "hypothesis": "안녕하세요 테스트 문장입니다"
+  },
+  {
+    "sample_id": "smoke",
+    "model": "voxtral",
+    "cer": 0.4,
+    "reference_len": 15,
+    "hypothesis_len": 9,
+    "hallucination_hits": [],
+    "reference": "안녕하세요 테스트 문장입니다",
+    "hypothesis": "안녕하세요 테스트"
+  }
+]

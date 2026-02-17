@@ -1,0 +1,11 @@
+faster-whisper
+silero-vad
+fastapi
+uvicorn[standard]
+websockets
+sqlalchemy
+pydantic
+pyyaml
+httpx
+transformers
+pytest

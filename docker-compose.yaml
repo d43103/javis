@@ -1,0 +1,75 @@
+services:
+  vllm-stt:
+    image: vllm/vllm-openai:latest
+    container_name: javis-vllm-stt
+    runtime: nvidia
+    ports:
+      - "8011:8000"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command:
+      - --model=Qwen/Qwen3-ASR-0.6B
+      - --gpu-memory-utilization=0.10
+      - --max-model-len=4096
+      - --dtype=float16
+      - --trust-remote-code
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  vllm-tts:
+    image: vllm/vllm-openai:latest
+    container_name: javis-vllm-tts
+    runtime: nvidia
+    ports:
+      - "8031:8000"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command:
+      - --model=Qwen/Qwen3-TTS-0.6B
+      - --gpu-memory-utilization=0.12
+      - --max-model-len=4096
+      - --dtype=float16
+      - --trust-remote-code
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+  vllm-llm:
+    image: vllm/vllm-openai:latest
+    container_name: javis-vllm-llm
+    runtime: nvidia
+    ports:
+      - "8041:8000"
+    volumes:
+      - ~/.cache/huggingface:/root/.cache/huggingface
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command:
+      - --model=Qwen/Qwen3-14B-AWQ
+      - --gpu-memory-utilization=0.50
+      - --max-model-len=8192
+      - --dtype=auto
+      - --quantization=awq
+      - --trust-remote-code
+      - --enable-auto-tool-choice
+      - --tool-call-parser=hermes
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 180s

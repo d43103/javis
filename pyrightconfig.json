@@ -1,0 +1,15 @@
+{
+  "pythonVersion": "3.12",
+  "include": [
+    "src",
+    "tests"
+  ],
+  "executionEnvironments": [
+    {
+      "root": ".",
+      "extraPaths": [
+        "src"
+      ]
+    }
+  ]
+}

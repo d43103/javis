@@ -1,0 +1,22 @@
+[
+  {
+    "model": "large-v3",
+    "file": "/Users/d43103/Workspace/projects/javis/recordings/test-01.wav",
+    "elapsed_seconds": 10.2252582910005,
+    "audio_seconds": 16.896,
+    "rtf": 0.6051881090791016,
+    "text": "지금 잘 녹음이 되고 있는지 모르겠네요. 인식이 잘 되는지 모르겠어요. 인식이 잘 되기를 바라면서 녹음을 합니다. 끝",
+    "exact_hits": [],
+    "contains_hits": []
+  },
+  {
+    "model": "distil-large-v3",
+    "file": "/Users/d43103/Workspace/projects/javis/recordings/test-01.wav",
+    "elapsed_seconds": 11.887613083003089,
+    "audio_seconds": 16.896,
+    "rtf": 0.7035755849315275,
+    "text": "is now now is now I'm not and I'm and I'm and I'm the good I'm going to",
+    "exact_hits": [],
+    "contains_hits": []
+  }
+]
