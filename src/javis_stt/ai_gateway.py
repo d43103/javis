@@ -108,3 +108,28 @@ class AIGateway:
                 last_error = str(exc)
 
         return AIResult(text="", error=last_error or "unknown_error")
+
+    def generate_with_history(self, session_id: str, text: str, history: list[dict]) -> "AIResult":
+        """OpenAI-format: sends full conversation history."""
+        messages: list[dict[str, Any]] = []
+        if self.system_prompt:
+            messages.append({"role": "system", "content": self.system_prompt})
+        messages.extend(history)
+        messages.append({"role": "user", "content": text})
+
+        payload: dict[str, Any] = {
+            "model": self.model,
+            "messages": messages,
+            "stream": False,
+        }
+
+        last_error: str | None = None
+        for _ in range(self.max_retries + 1):
+            try:
+                raw = self.requester(payload)
+                response_text = self._extract_openai_response(raw)
+                return AIResult(text=response_text, error=None)
+            except Exception as exc:
+                last_error = str(exc)
+
+        return AIResult(text="", error=last_error or "unknown_error")
