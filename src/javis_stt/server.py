@@ -170,16 +170,22 @@ def create_app(
         if app.state.tts_service is None:
             raise HTTPException(status_code=503, detail="tts_not_enabled")
 
-        def generate_audio():
-            yield from app.state.tts_service.synthesize_stream(request.response_text)
+        logger.info(
+            "voice_turn session=%s request_text=%s",
+            request.session_id,
+            request.text[:100] if request.text else "(empty)",
+        )
+
+        async def generate_audio():
+            for chunk in await asyncio.to_thread(
+                lambda: list(app.state.tts_service.synthesize_stream(request.response_text))
+            ):
+                yield chunk
 
         return StreamingResponse(
             generate_audio(),
-            media_type="application/octet-stream",
-            headers={
-                "X-Session-Id": request.session_id,
-                "X-Content-Type": "audio/pcm",
-            },
+            media_type="audio/pcm",
+            headers={"X-Session-Id": request.session_id},
         )
 
     @app.websocket("/ws/tts")
