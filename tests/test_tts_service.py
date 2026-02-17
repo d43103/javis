@@ -121,3 +121,41 @@ def test_tts_payload_structure():
     assert p["voice"] == "Chelsie"
     assert p["response_format"] == "pcm"
     assert p["sample_rate"] == 16000
+
+
+def test_tts_ws_stream_requester_yields_chunks():
+    """TTSService.synthesize_stream_ws() calls ws_stream_requester and yields chunks."""
+    from src.javis_stt.tts_service import TTSService
+
+    def fake_ws_requester(text: str):
+        yield b"\x00\x01" * 400
+        yield b"\x00\x02" * 400
+
+    svc = TTSService(
+        base_url="http://127.0.0.1:8031",
+        model="Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+        voice="test01",
+        ws_stream_requester=fake_ws_requester,
+    )
+    chunks = list(svc.synthesize_stream_ws("안녕하세요"))
+    assert len(chunks) == 2
+    assert chunks[0] == b"\x00\x01" * 400
+
+
+def test_tts_ws_stream_falls_back_to_http_if_not_configured():
+    """When ws_stream_requester is None, synthesize_stream_ws delegates to synthesize_stream."""
+    from src.javis_stt.tts_service import TTSService
+
+    http_chunks = [b"\xAA\xBB" * 100]
+
+    def fake_http_stream(payload):
+        yield from http_chunks
+
+    svc = TTSService(
+        base_url="http://127.0.0.1:8031",
+        model="Qwen/Qwen3-TTS-12Hz-1.7B-Base",
+        stream_requester=fake_http_stream,
+        ws_stream_requester=None,
+    )
+    chunks = list(svc.synthesize_stream_ws("test"))
+    assert chunks == http_chunks

@@ -27,6 +27,7 @@ class TTSService:
         chunk_size: int = 4096,
         requester=None,
         stream_requester=None,
+        ws_stream_requester=None,   # NEW: callable(text: str) -> Iterator[bytes]
     ):
         self.base_url = base_url.rstrip("/")
         self.model = model
@@ -37,6 +38,7 @@ class TTSService:
         self.chunk_size = chunk_size
         self.requester = requester or self._default_request
         self.stream_requester = stream_requester or self._default_stream_request
+        self.ws_stream_requester = ws_stream_requester
 
     def _build_payload(self, text: str) -> dict[str, Any]:
         return {
@@ -89,3 +91,18 @@ class TTSService:
             yield from self.stream_requester(payload)
         except Exception:
             logger.exception("tts_stream_failed text=%s", text[:80])
+
+    def synthesize_stream_ws(self, text: str) -> Iterator[bytes]:
+        """Stream PCM via ws_stream_requester (preferred) or fall back to HTTP streaming."""
+        if not text or not text.strip():
+            return
+
+        if self.ws_stream_requester is not None:
+            try:
+                yield from self.ws_stream_requester(text.strip())
+            except Exception:
+                logger.exception("tts_ws_stream_failed text=%s", text[:80])
+            return
+
+        # fallback: HTTP streaming
+        yield from self.synthesize_stream(text)
