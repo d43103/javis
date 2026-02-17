@@ -9,6 +9,21 @@ import types
 sd_stub = types.ModuleType("sounddevice")
 sd_stub.play = lambda data, samplerate, blocking: None
 sd_stub.wait = lambda: None
+
+
+class _FakeOutputStream:
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def write(self, data):
+        pass
+
+
+sd_stub.OutputStream = _FakeOutputStream
+sd_stub.RawInputStream = _FakeOutputStream
 sys.modules["sounddevice"] = sd_stub
 
 
@@ -39,18 +54,16 @@ def test_bridge_processes_final_event():
     tts_calls = []
 
     class FakeBridge(bridge.VoiceBridge):
-        def _post_tts_and_play(self, session_id, response_text):
-            tts_calls.append({"session_id": session_id, "text": response_text})
+        def _post_tts_and_play(self, response_text):
+            tts_calls.append({"text": response_text})
 
     b = FakeBridge(
-        server_ws_url="ws://fake:8765/ws/stt",
-        server_http_url="http://fake:8765",
+        server="ws://fake:8765",
         session_id="test",
         claude_model="claude-haiku-4-5-20251001",
     )
-    result = b._handle_final_event(session_id="test", text="오늘 날씨 어때?")
+    b._handle_final("오늘 날씨 어때?")
 
-    assert result == "서울 날씨는 맑습니다."
     assert len(tts_calls) == 1
     assert tts_calls[0]["text"] == "서울 날씨는 맑습니다."
 
@@ -62,17 +75,16 @@ def test_bridge_maintains_conversation_history():
     bridge = importlib.import_module("src.voice_llm_bridge")
 
     class FakeBridge(bridge.VoiceBridge):
-        def _post_tts_and_play(self, session_id, response_text):
+        def _post_tts_and_play(self, response_text):
             pass
 
     b = FakeBridge(
-        server_ws_url="ws://fake:8765/ws/stt",
-        server_http_url="http://fake:8765",
+        server="ws://fake:8765",
         session_id="test",
         claude_model="claude-haiku-4-5-20251001",
     )
-    b._handle_final_event("test", "첫 번째")
-    b._handle_final_event("test", "두 번째")
+    b._handle_final("첫 번째")
+    b._handle_final("두 번째")
 
     # history should have 4 messages (2 turns * user+assistant each)
     assert len(b._history) == 4
@@ -85,18 +97,17 @@ def test_bridge_trims_history_at_max_turns():
     bridge = importlib.import_module("src.voice_llm_bridge")
 
     class FakeBridge(bridge.VoiceBridge):
-        def _post_tts_and_play(self, session_id, response_text):
+        def _post_tts_and_play(self, response_text):
             pass
 
     b = FakeBridge(
-        server_ws_url="ws://fake:8765/ws/stt",
-        server_http_url="http://fake:8765",
+        server="ws://fake:8765",
         session_id="test",
         claude_model="claude-haiku-4-5-20251001",
         max_turns=3,
     )
     for i in range(10):
-        b._handle_final_event("test", f"질문 {i}")
+        b._handle_final(f"질문 {i}")
 
     # max_turns=3 → max 6 messages in history
     assert len(b._history) <= 6
