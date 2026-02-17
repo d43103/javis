@@ -65,7 +65,8 @@ class VoiceBridge:
         session_id: str,
         claude_model: str = "claude-haiku-4-5-20251001",
         max_turns: int = 10,
-        sample_rate: int = 24000,
+        mic_sample_rate: int = 16000,   # ASR 서버가 16kHz 기대
+        tts_sample_rate: int = 24000,   # TTS 서버가 24kHz 출력
         chunk_ms: int = 80,
         device: str | None = None,
     ):
@@ -73,7 +74,8 @@ class VoiceBridge:
         self.http_base = _build_http_base(server)
         self.session_id = session_id
         self.claude_model = claude_model
-        self.sample_rate = sample_rate
+        self.mic_sample_rate = mic_sample_rate
+        self.tts_sample_rate = tts_sample_rate
         self.chunk_ms = chunk_ms
         self.device = device
         self._history: deque[dict[str, str]] = deque(maxlen=max_turns * 2)
@@ -109,7 +111,7 @@ class VoiceBridge:
                 resp.raise_for_status()
                 # 청크가 도착하는 즉시 재생 (버퍼링 없이)
                 with sd.OutputStream(
-                    samplerate=self.sample_rate,
+                    samplerate=self.tts_sample_rate,
                     channels=1,
                     dtype="float32",
                 ) as stream:
@@ -134,7 +136,7 @@ class VoiceBridge:
         sd = __import__("sounddevice")
         channels = 1
         bytes_per_sample = 2  # int16
-        chunk_frames = int(self.sample_rate * self.chunk_ms / 1000)
+        chunk_frames = int(self.mic_sample_rate * self.chunk_ms / 1000)
         queue: asyncio.Queue[bytes] = asyncio.Queue(maxsize=500)
         loop = asyncio.get_running_loop()
 
@@ -153,11 +155,11 @@ class VoiceBridge:
                         device_index = i
                         break
 
-        logger.info("mic_start device=%s sample_rate=%s chunk_ms=%s",
-                    device_index, self.sample_rate, self.chunk_ms)
+        logger.info("mic_start device=%s mic_rate=%s tts_rate=%s chunk_ms=%s",
+                    device_index, self.mic_sample_rate, self.tts_sample_rate, self.chunk_ms)
 
         with sd.RawInputStream(
-            samplerate=self.sample_rate,
+            samplerate=self.mic_sample_rate,
             channels=channels,
             dtype="int16",
             device=device_index,
