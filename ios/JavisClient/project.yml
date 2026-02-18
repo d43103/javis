@@ -1,0 +1,57 @@
+name: JavisClient
+options:
+  minimumXcodeVersion: "15.0"
+  defaultConfig: Debug
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+  JavisClient-iOS:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: HubConnection.swift
+        createIntermediateGroups: true
+      - path: Models.swift
+        createIntermediateGroups: true
+      - path: iOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.javis.client.ios
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Javis uses the microphone to capture your voice."
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        SWIFT_VERSION: 5.9
+    scheme:
+      testTargets:
+        - JavisClientTests
+
+  JavisClient-macOS:
+    type: application
+    platform: macOS
+    deploymentTarget: "13.0"
+    sources:
+      - path: HubConnection.swift
+        createIntermediateGroups: true
+      - path: Models.swift
+        createIntermediateGroups: true
+      - path: macOS
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.javis.menubar
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Javis uses the microphone to capture your voice."
+        INFOPLIST_KEY_LSUIElement: YES
+        SWIFT_VERSION: 5.9
+        CODE_SIGN_IDENTITY: "-"
+    entitlements:
+      path: macOS/JavisMenuBar.entitlements
+
+  JavisClientTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests
+    dependencies:
+      - target: JavisClient-iOS
