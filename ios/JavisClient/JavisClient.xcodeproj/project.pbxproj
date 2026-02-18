@@ -1,0 +1,495 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		20319AF3BBCE94790F0D2736 /* HubConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DD9FD2C559A66C9EE19962 /* HubConnection.swift */; };
+		24EAEC59A6207CB2A3E5897A /* HubConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95875C340FBC4CC7AD830E42 /* HubConnectionTests.swift */; };
+		4914497C9AEEFD84674C2928 /* AudioEngine+Mac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999AF258B833FFC66FBD4C3B /* AudioEngine+Mac.swift */; };
+		4AB00000639635B573F8056F /* ModelsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C3462F247182F3F8E2EEF67 /* ModelsTests.swift */; };
+		5A42BD78818596AC2A0D1827 /* HubConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DD9FD2C559A66C9EE19962 /* HubConnection.swift */; };
+		763CAC8F5A6EEF7C9F2D0F4F /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8188FD0C240B8B844B1ACFCE /* MenuBarView.swift */; };
+		8068E942DF8EFD0D9BE7B973 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9790172D93CAE88B592BCCF7 /* Models.swift */; };
+		A42198B44B36853B32FFF885 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB5A9D060F8BD5B208411C78 /* AudioEngine.swift */; };
+		B1C038C9611C3415E436767F /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9790172D93CAE88B592BCCF7 /* Models.swift */; };
+		C665DA83F20B29E80C06ED81 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402994CD76E039CE4FC1CCC7 /* ContentView.swift */; };
+		CF2C8975589A0306EBFE23F7 /* JavisMenuBarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C3DC985F4C3EFAA7194811 /* JavisMenuBarApp.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B4C059537076870F1346BB67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 20125607299F9369F298EABD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 672AE812AE5D17506481AF59;
+			remoteInfo = "JavisClient-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1D389FF3E2F294478DB4FAD7 /* JavisClientTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = JavisClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		22947A4DB376524AB2DF45A4 /* JavisClient-macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JavisClient-macOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D05118710C4778CD80E8ABC /* JavisMenuBar.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JavisMenuBar.entitlements; sourceTree = "<group>"; };
+		402994CD76E039CE4FC1CCC7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		4C3462F247182F3F8E2EEF67 /* ModelsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelsTests.swift; sourceTree = "<group>"; };
+		70DD9FD2C559A66C9EE19962 /* HubConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubConnection.swift; sourceTree = "<group>"; };
+		74C3DC985F4C3EFAA7194811 /* JavisMenuBarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JavisMenuBarApp.swift; sourceTree = "<group>"; };
+		8188FD0C240B8B844B1ACFCE /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		95875C340FBC4CC7AD830E42 /* HubConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HubConnectionTests.swift; sourceTree = "<group>"; };
+		9790172D93CAE88B592BCCF7 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		999AF258B833FFC66FBD4C3B /* AudioEngine+Mac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AudioEngine+Mac.swift"; sourceTree = "<group>"; };
+		DB5A9D060F8BD5B208411C78 /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		F14BDC03FFB45967C62ADC31 /* JavisClient-iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "JavisClient-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		147E9629C6AE639E8CF966A5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F14BDC03FFB45967C62ADC31 /* JavisClient-iOS.app */,
+				22947A4DB376524AB2DF45A4 /* JavisClient-macOS.app */,
+				1D389FF3E2F294478DB4FAD7 /* JavisClientTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3DD19C9ED0364876A5EC2DB8 /* macOS */ = {
+			isa = PBXGroup;
+			children = (
+				999AF258B833FFC66FBD4C3B /* AudioEngine+Mac.swift */,
+				3D05118710C4778CD80E8ABC /* JavisMenuBar.entitlements */,
+				74C3DC985F4C3EFAA7194811 /* JavisMenuBarApp.swift */,
+				8188FD0C240B8B844B1ACFCE /* MenuBarView.swift */,
+			);
+			path = macOS;
+			sourceTree = "<group>";
+		};
+		4E3BABB99BD4A7E23EC18187 = {
+			isa = PBXGroup;
+			children = (
+				70DD9FD2C559A66C9EE19962 /* HubConnection.swift */,
+				9790172D93CAE88B592BCCF7 /* Models.swift */,
+				9244C1B5DFCCE894829D177A /* iOS */,
+				3DD19C9ED0364876A5EC2DB8 /* macOS */,
+				EBAC3FE61A69DA572B85B6F6 /* Tests */,
+				147E9629C6AE639E8CF966A5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		9244C1B5DFCCE894829D177A /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DB5A9D060F8BD5B208411C78 /* AudioEngine.swift */,
+				402994CD76E039CE4FC1CCC7 /* ContentView.swift */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		EBAC3FE61A69DA572B85B6F6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				95875C340FBC4CC7AD830E42 /* HubConnectionTests.swift */,
+				4C3462F247182F3F8E2EEF67 /* ModelsTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		672AE812AE5D17506481AF59 /* JavisClient-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2340E3033192889E060A19F1 /* Build configuration list for PBXNativeTarget "JavisClient-iOS" */;
+			buildPhases = (
+				CBDAF28AE72EAB0D11A8F47E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "JavisClient-iOS";
+			packageProductDependencies = (
+			);
+			productName = "JavisClient-iOS";
+			productReference = F14BDC03FFB45967C62ADC31 /* JavisClient-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		91C42FCB6612331751FB1C23 /* JavisClient-macOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 73234B4545DDC45ED6607084 /* Build configuration list for PBXNativeTarget "JavisClient-macOS" */;
+			buildPhases = (
+				DA94A9822195167EB738BB82 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "JavisClient-macOS";
+			packageProductDependencies = (
+			);
+			productName = "JavisClient-macOS";
+			productReference = 22947A4DB376524AB2DF45A4 /* JavisClient-macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		9B4F72174210BB0AAF26F18B /* JavisClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 76BE305C98671AC97DA8363F /* Build configuration list for PBXNativeTarget "JavisClientTests" */;
+			buildPhases = (
+				7496A514645907B0C262363D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9B3DCD3AC3D8F459242BBCE3 /* PBXTargetDependency */,
+			);
+			name = JavisClientTests;
+			packageProductDependencies = (
+			);
+			productName = JavisClientTests;
+			productReference = 1D389FF3E2F294478DB4FAD7 /* JavisClientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		20125607299F9369F298EABD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 7F111C5BFA2E5900184650C5 /* Build configuration list for PBXProject "JavisClient" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 4E3BABB99BD4A7E23EC18187;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				672AE812AE5D17506481AF59 /* JavisClient-iOS */,
+				91C42FCB6612331751FB1C23 /* JavisClient-macOS */,
+				9B4F72174210BB0AAF26F18B /* JavisClientTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7496A514645907B0C262363D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				24EAEC59A6207CB2A3E5897A /* HubConnectionTests.swift in Sources */,
+				4AB00000639635B573F8056F /* ModelsTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CBDAF28AE72EAB0D11A8F47E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A42198B44B36853B32FFF885 /* AudioEngine.swift in Sources */,
+				C665DA83F20B29E80C06ED81 /* ContentView.swift in Sources */,
+				5A42BD78818596AC2A0D1827 /* HubConnection.swift in Sources */,
+				8068E942DF8EFD0D9BE7B973 /* Models.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA94A9822195167EB738BB82 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4914497C9AEEFD84674C2928 /* AudioEngine+Mac.swift in Sources */,
+				20319AF3BBCE94790F0D2736 /* HubConnection.swift in Sources */,
+				CF2C8975589A0306EBFE23F7 /* JavisMenuBarApp.swift in Sources */,
+				763CAC8F5A6EEF7C9F2D0F4F /* MenuBarView.swift in Sources */,
+				B1C038C9611C3415E436767F /* Models.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9B3DCD3AC3D8F459242BBCE3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 672AE812AE5D17506481AF59 /* JavisClient-iOS */;
+			targetProxy = B4C059537076870F1346BB67 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1040059CF45599F43A95AE92 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Javis uses the microphone to capture your voice.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.javis.client.ios;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4DD3C5859449E3A21146D195 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = macOS/JavisMenuBar.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Javis uses the microphone to capture your voice.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.javis.menubar;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		5F534E71052892FFAFF39D56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		7F1A3B00B8B954D80B4FD729 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JavisClient-iOS.app/JavisClient-iOS";
+			};
+			name = Debug;
+		};
+		94623F7530339CE566C3B2C4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = macOS/JavisMenuBar.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Javis uses the microphone to capture your voice.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.javis.menubar;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		BC6B44882D8B6EDDF313E4DC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Javis uses the microphone to capture your voice.";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.javis.client.ios;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D1A4378972DC7C43910B6831 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JavisClient-iOS.app/JavisClient-iOS";
+			};
+			name = Release;
+		};
+		D40A3332B579858B97FB501B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2340E3033192889E060A19F1 /* Build configuration list for PBXNativeTarget "JavisClient-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1040059CF45599F43A95AE92 /* Debug */,
+				BC6B44882D8B6EDDF313E4DC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		73234B4545DDC45ED6607084 /* Build configuration list for PBXNativeTarget "JavisClient-macOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				94623F7530339CE566C3B2C4 /* Debug */,
+				4DD3C5859449E3A21146D195 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		76BE305C98671AC97DA8363F /* Build configuration list for PBXNativeTarget "JavisClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7F1A3B00B8B954D80B4FD729 /* Debug */,
+				D1A4378972DC7C43910B6831 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7F111C5BFA2E5900184650C5 /* Build configuration list for PBXProject "JavisClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F534E71052892FFAFF39D56 /* Debug */,
+				D40A3332B579858B97FB501B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 20125607299F9369F298EABD /* Project object */;
+}
