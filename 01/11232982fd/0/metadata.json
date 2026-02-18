@@ -1,0 +1,36 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "0111232982fd",
+  "session_id": "8f96bbda-9839-44b8-9d72-13eff572f7a3",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-18T15:50:25.812907Z",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "ios/JavisClient/.gitignore",
+    "ios/JavisClient/iOS/AudioEngine.swift",
+    "ios/JavisClient/iOS/ContentView.swift",
+    "ios/JavisClient/HubConnection.swift",
+    "ios/JavisClient/project.yml"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "507753df47b0",
+  "transcript_identifier_at_start": "48b6ef5a-c53b-408d-9a58-366d1fd8801d",
+  "token_usage": {
+    "input_tokens": 11,
+    "cache_creation_tokens": 42326,
+    "cache_read_tokens": 251545,
+    "output_tokens": 71,
+    "api_call_count": 7
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-18T15:50:25.79316Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 296,
+    "human_removed": 417,
+    "total_committed": 0,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".claude/projects/-Users-d43103-Workspace-projects-javis/8f96bbda-9839-44b8-9d72-13eff572f7a3.jsonl"
+}

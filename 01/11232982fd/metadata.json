@@ -1,0 +1,30 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "0111232982fd",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    "ios/JavisClient/.gitignore",
+    "ios/JavisClient/HubConnection.swift",
+    "ios/JavisClient/iOS/AudioEngine.swift",
+    "ios/JavisClient/iOS/ContentView.swift",
+    "ios/JavisClient/project.yml"
+  ],
+  "sessions": [
+    {
+      "metadata": "/01/11232982fd/0/metadata.json",
+      "transcript": "/01/11232982fd/0/full.jsonl",
+      "context": "/01/11232982fd/0/context.md",
+      "content_hash": "/01/11232982fd/0/content_hash.txt",
+      "prompt": "/01/11232982fd/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 11,
+    "cache_creation_tokens": 42326,
+    "cache_read_tokens": 251545,
+    "output_tokens": 71,
+    "api_call_count": 7
+  }
+}
