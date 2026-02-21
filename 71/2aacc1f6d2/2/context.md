@@ -1,0 +1,8 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+tts랑 stt 어떤 사양으로 설치되어 있는지 확인해줘
+
