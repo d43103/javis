@@ -1,0 +1,5 @@
+https://github.com/entireio/cli 이걸 참고해서 claude 에서 사용할 mcp 나 tool 이나 plugin 이 있을까?
+
+---
+
+응 .gitignore 에 추가해줘
