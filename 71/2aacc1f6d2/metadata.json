@@ -3,8 +3,9 @@
   "checkpoint_id": "712aacc1f6d2",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 102,
+  "checkpoints_count": 103,
   "files_touched": [
+    ".gitignore",
     "CLAUDE.md",
     "deploy/com.javis.voice-bridge.plist",
     "diaglog.sh",
@@ -42,13 +43,20 @@
       "context": "/71/2aacc1f6d2/3/context.md",
       "content_hash": "/71/2aacc1f6d2/3/content_hash.txt",
       "prompt": "/71/2aacc1f6d2/3/prompt.txt"
+    },
+    {
+      "metadata": "/71/2aacc1f6d2/4/metadata.json",
+      "transcript": "/71/2aacc1f6d2/4/full.jsonl",
+      "context": "/71/2aacc1f6d2/4/context.md",
+      "content_hash": "/71/2aacc1f6d2/4/content_hash.txt",
+      "prompt": "/71/2aacc1f6d2/4/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 2274,
-    "cache_creation_tokens": 2174807,
-    "cache_read_tokens": 172913675,
-    "output_tokens": 176823,
-    "api_call_count": 1588
+    "input_tokens": 2285,
+    "cache_creation_tokens": 2217133,
+    "cache_read_tokens": 173165220,
+    "output_tokens": 176894,
+    "api_call_count": 1595
   }
 }
