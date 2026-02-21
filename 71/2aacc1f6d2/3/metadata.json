@@ -1,0 +1,39 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "712aacc1f6d2",
+  "session_id": "85ea134a-f3fe-450e-a413-ff7e6dccbcc6",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T06:47:10.360804Z",
+  "branch": "main",
+  "checkpoints_count": 85,
+  "files_touched": [
+    "CLAUDE.md",
+    "deploy/com.javis.voice-bridge.plist",
+    "diaglog.sh",
+    "scripts/ai.javis.mic-client.plist",
+    "scripts/mic_stream_client.py",
+    "scripts/run_mic_client_service.sh",
+    "src/javis_menubar.py",
+    "src/javis_tts/tts_streaming_server.py"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "e4fa5bb798c5",
+  "transcript_identifier_at_start": "9e69d1be-4963-48a6-b464-945d1acf91f6",
+  "token_usage": {
+    "input_tokens": 2154,
+    "cache_creation_tokens": 2057165,
+    "cache_read_tokens": 168664780,
+    "output_tokens": 174850,
+    "api_call_count": 1518
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T06:47:07.528524Z",
+    "agent_lines": 505,
+    "human_added": 6409,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 6914,
+    "agent_percentage": 7.304020827306913
+  },
+  "transcript_path": ".claude/projects/-Users-d43103-Workspace-projects-javis/85ea134a-f3fe-450e-a413-ff7e6dccbcc6.jsonl"
+}
