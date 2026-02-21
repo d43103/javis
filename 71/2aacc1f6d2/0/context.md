@@ -1,0 +1,16 @@
+# Session Context
+
+## User Prompts
+
+### Prompt 1
+
+context7 mcp 동작 원리
+
+### Prompt 2
+
+그럼 context7 서버에 없는 라이브러리는 새로 찾아오나? jfog 에 npm repository 를 서버에서 찾고 npm global repository 에서 찾는 것처럼?
+
+### Prompt 3
+
+upstream proxy 를 안하는 이유는 너무 많은 라이브러리가 있어서?
+
