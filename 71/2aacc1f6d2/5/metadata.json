@@ -1,0 +1,53 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "712aacc1f6d2",
+  "session_id": "c1c901b8-7aed-4f02-aa29-dc058f3e439d",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T06:47:11.837549Z",
+  "branch": "main",
+  "checkpoints_count": 34,
+  "files_touched": [
+    "CLAUDE.md",
+    "README.md",
+    "deploy/com.javis.voice-bridge.plist",
+    "docker-compose",
+    "docs/architecture.md",
+    "docs/archive/plans/2026-02-16-stt-realtime-ai-text-loop-implementation.md",
+    "docs/archive/plans/2026-02-17-qwen3-asr-deployment-runbook.md",
+    "docs/archive/plans/2026-02-17-voxtral-poc-runbook.md",
+    "docs/archive/plans/2026-02-18-phase3-implementation-plan.md",
+    "docs/archive/plans/2026-02-18-phase3-voice-assistant-design.md",
+    "docs/archive/plans/2026-02-18-swift-menubar-impl.md",
+    "docs/archive/plans/2026-02-18-swift-multiplatform-client-design.md",
+    "docs/archive/plans/2026-02-18-voice-hub-openclaw-design.md",
+    "docs/archive/plans/2026-02-18-voice-hub-openclaw-impl.md",
+    "docs/archive/requirements-stt-realtime-v1.md",
+    "docs/archive/spec-stt-realtime-v1.md",
+    "docs/roadmap.md",
+    "docs/runbook-4090.md",
+    "scripts/ai.javis.mic-client.plist",
+    "scripts/mic_stream_client.py",
+    "scripts/run_mic_client_service.sh",
+    "src/javis_menubar.py"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "0c3f1460b57a",
+  "transcript_identifier_at_start": "b826942f-a660-4499-8b89-eed9ecae2b82",
+  "token_usage": {
+    "input_tokens": 3444,
+    "cache_creation_tokens": 857396,
+    "cache_read_tokens": 47864082,
+    "output_tokens": 46103,
+    "api_call_count": 449
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T06:47:10.778175Z",
+    "agent_lines": 5808,
+    "human_added": 1106,
+    "human_modified": 0,
+    "human_removed": 0,
+    "total_committed": 6914,
+    "agent_percentage": 84.00347121781891
+  },
+  "transcript_path": ".claude/projects/-Users-d43103-Workspace-projects-javis/c1c901b8-7aed-4f02-aa29-dc058f3e439d.jsonl"
+}
