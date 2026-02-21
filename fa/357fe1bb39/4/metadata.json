@@ -1,0 +1,34 @@
+{
+  "cli_version": "0.4.5",
+  "checkpoint_id": "fa357fe1bb39",
+  "session_id": "ecfc456f-50fc-47a6-a8b9-deabbb4f2e41",
+  "strategy": "manual-commit",
+  "created_at": "2026-02-21T07:01:01.951997Z",
+  "branch": "main",
+  "checkpoints_count": 0,
+  "files_touched": [
+    "CLAUDE.md"
+  ],
+  "agent": "Claude Code",
+  "turn_id": "59aea634c941",
+  "transcript_identifier_at_start": "dde2f548-ebe2-473d-8790-1cf86c0253da",
+  "checkpoint_transcript_start": 1512,
+  "transcript_lines_at_start": 1512,
+  "token_usage": {
+    "input_tokens": 7480,
+    "cache_creation_tokens": 389365,
+    "cache_read_tokens": 11794892,
+    "output_tokens": 13863,
+    "api_call_count": 112
+  },
+  "initial_attribution": {
+    "calculated_at": "2026-02-21T07:01:01.398639Z",
+    "agent_lines": 0,
+    "human_added": 0,
+    "human_modified": 3,
+    "human_removed": 0,
+    "total_committed": 0,
+    "agent_percentage": 0
+  },
+  "transcript_path": ".claude/projects/-Users-d43103-Workspace-projects-javis/ecfc456f-50fc-47a6-a8b9-deabbb4f2e41.jsonl"
+}
