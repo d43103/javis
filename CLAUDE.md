@@ -141,9 +141,9 @@ curl http://127.0.0.1:8031/health   # TTS
 
 ### 소스 위치
 
-- **repo**: `~/Workspace/opensource/openclaw`
+- **repo**: `~/Workspace/projects/openclaw-javis` (fork: `github.com/d43103/openclaw-javis`)
 - **branch**: `javis-talk-mode`
-- **worktree**: `~/Workspace/opensource/openclaw` (main은 `~/Workspace/opensource/openclaw-javis`)
+- upstream 원본: `~/Workspace/opensource/openclaw` (read-only 참고용)
 
 ### 수정된 파일
 
@@ -178,7 +178,7 @@ defaults read ai.openclaw.mac.debug | grep -E "talk|tts|speaker|voice"
 ### 앱 빌드 및 배포
 
 ```bash
-cd ~/Workspace/opensource/openclaw/apps/macos
+cd ~/Workspace/projects/openclaw-javis/apps/macos
 swift build -c release
 
 cp .build/release/OpenClaw dist/OpenClaw.app/Contents/MacOS/OpenClaw
