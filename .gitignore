@@ -26,6 +26,13 @@ recordings/*.wav
 
 # Agent/local tool state
 .claude/
+.entire/
+.openclaw/
+
+# Xcode build artifacts
+ios/JavisClient/build/
+*.xcuserstate
+xcuserdata/
 
 # Deploy plists (may contain secrets)
 deploy/*.plist

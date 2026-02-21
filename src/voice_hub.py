@@ -3,7 +3,8 @@ import asyncio
 import json
 import logging
 import subprocess
-from dataclasses import dataclass, field
+import urllib.parse
+from dataclasses import dataclass
 
 logger = logging.getLogger("javis.hub")
 
@@ -25,8 +26,10 @@ def _run_openclaw(agent_id: str, session_id: str, text: str) -> str:
             logger.error("openclaw_error stderr=%s", result.stderr[:200])
             return _FALLBACK
         data = json.loads(result.stdout)
-        # openclaw JSON 응답: {"payloads": [{"text": "..."}]}
-        payloads = data.get("payloads", [])
+        # gateway 응답: {"result": {"payloads": [...]}}
+        # embedded 응답: {"payloads": [...]}
+        inner = data.get("result", data)
+        payloads = inner.get("payloads", [])
         if payloads and isinstance(payloads, list):
             return payloads[0].get("text", _FALLBACK)
         return _FALLBACK
@@ -41,6 +44,7 @@ class VoiceSession:
     session_id: str
     stt_ws_url: str
     tts_http_url: str
+    tts_voice: str = "d43103"
     agent_id: str = "voice-assistant"
     input_gain: float = 1.0
     output_gain: float = 1.0
@@ -52,9 +56,6 @@ class VoiceSession:
             self.input_gain = float(msg["input"])
         if "output" in msg:
             self.output_gain = float(msg["output"])
-
-
-import urllib.parse
 
 
 async def _send_json(ws, **kwargs) -> None:
@@ -76,23 +77,20 @@ class VoiceHub:
     def __init__(
         self,
         server: str = "ws://192.168.219.106:8765",
+        tts_server: str = "http://192.168.219.106:8880",
+        tts_voice: str = "d43103",
         agent_id: str = "voice-assistant",
         host: str = "0.0.0.0",
         port: int = 8766,
         idle_flush_seconds: float = 1.5,
     ):
         self.server = server.rstrip("/")
+        self.tts_base = tts_server.rstrip("/")
+        self.tts_voice = tts_voice
         self.agent_id = agent_id
         self.host = host
         self.port = port
         self.idle_flush_seconds = idle_flush_seconds
-
-        # ws://host:port → http://host:port
-        self.http_base = (
-            self.server
-            .replace("wss://", "https://")
-            .replace("ws://", "http://")
-        )
 
     def _stt_url(self, session_id: str) -> str:
         return f"{self.server}/ws/stt?session_id={session_id}"
@@ -111,7 +109,8 @@ class VoiceHub:
         session = VoiceSession(
             session_id=session_id,
             stt_ws_url=self._stt_url(session_id),
-            tts_http_url=self.http_base,
+            tts_http_url=self.tts_base,
+            tts_voice=self.tts_voice,
             agent_id=self.agent_id,
         )
         logger.info("client_connected session=%s", session_id)
@@ -130,6 +129,9 @@ class VoiceHub:
             response = await asyncio.to_thread(
                 _run_openclaw, session.agent_id, session.session_id, merged
             )
+            if response.strip().upper() == "NO_REPLY":
+                await _send_json(client_ws, type="status", value="idle")
+                return
             await _send_json(client_ws, type="ai", text=response)
             await _stream_tts(client_ws, session, response)
 
@@ -213,21 +215,22 @@ class VoiceHub:
 
 
 async def _stream_tts(client_ws, session: VoiceSession, response_text: str) -> None:
-    """4090 TTS를 스트리밍하여 클라이언트 WebSocket으로 PCM 바이너리를 전송한다."""
+    """Qwen3-TTS로 음성을 생성하여 클라이언트 WebSocket으로 PCM 바이너리를 전송한다."""
     import httpx
     import numpy as np
 
     await _send_json(client_ws, type="status", value="speaking")
     session.mic_muted = True
     try:
-        async with httpx.AsyncClient(timeout=30.0) as client:
+        async with httpx.AsyncClient(timeout=60.0) as client:
             async with client.stream(
                 "POST",
-                f"{session.tts_http_url}/v1/voice/turn",
+                f"{session.tts_http_url}/v1/audio/speech",
                 json={
-                    "session_id": session.session_id,
-                    "text": "",
-                    "response_text": response_text,
+                    "model": "qwen3-tts",
+                    "voice": session.tts_voice,
+                    "input": response_text,
+                    "response_format": "pcm",
                 },
             ) as resp:
                 resp.raise_for_status()
@@ -252,6 +255,8 @@ def main() -> None:
     )
     parser = argparse.ArgumentParser(description="Javis Mac Hub Server")
     parser.add_argument("--server", default="ws://192.168.219.106:8765")
+    parser.add_argument("--tts-server", default="http://192.168.219.106:8880", help="Qwen3-TTS HTTP base URL")
+    parser.add_argument("--tts-voice", default="Vivian", help="TTS 음성 (Vivian/Ryan/Sophia/...)")
     parser.add_argument("--agent", default="voice-assistant")
     parser.add_argument("--host", default="0.0.0.0")
     parser.add_argument("--port", type=int, default=8766)
@@ -260,6 +265,8 @@ def main() -> None:
 
     hub = VoiceHub(
         server=args.server,
+        tts_server=args.tts_server,
+        tts_voice=args.tts_voice,
         agent_id=args.agent,
         host=args.host,
         port=args.port,

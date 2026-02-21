@@ -211,14 +211,20 @@ class ASRService:
         return any(("\uac00" <= ch <= "\ud7a3") or ("\u3130" <= ch <= "\u318f") for ch in text)
 
     def _is_non_korean_script_output(self, text: str) -> bool:
+        """한국어 모드에서 한글이 포함되지 않은 텍스트를 차단.
+
+        키보드/선풍기 등 소음이 스페인어, 중국어 등으로 환각되는 현상 방지.
+        """
         if not self.language.lower().startswith("ko"):
             return False
         if self._contains_hangul(text):
             return False
-        normalized = "".join(ch for ch in text if ch.isalnum() or ("\u4e00" <= ch <= "\u9fff"))
-        if not normalized:
+        # 한글 없는 텍스트: 순수 숫자/구두점만 있으면 통과 (시간, 숫자 응답)
+        alphas = "".join(ch for ch in text if ch.isalpha())
+        if not alphas:
             return False
-        return self._contains_cjk_ideograph(normalized) and len(normalized) <= 8
+        # 한글이 없고 알파벳/한자 등 다른 문자만 있으면 차단
+        return True
 
     def register_runtime_hallucinations(
         self,
