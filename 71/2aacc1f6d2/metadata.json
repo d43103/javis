@@ -3,7 +3,7 @@
   "checkpoint_id": "712aacc1f6d2",
   "strategy": "manual-commit",
   "branch": "main",
-  "checkpoints_count": 137,
+  "checkpoints_count": 163,
   "files_touched": [
     ".gitignore",
     "CLAUDE.md",
@@ -29,7 +29,9 @@
     "scripts/mic_stream_client.py",
     "scripts/run_mic_client_service.sh",
     "src/javis_menubar.py",
-    "src/javis_tts/tts_streaming_server.py"
+    "src/javis_tts/tts_streaming_server.py",
+    "src/voice_hub.py",
+    "src/voice_llm_bridge.py"
   ],
   "sessions": [
     {
@@ -73,13 +75,20 @@
       "context": "/71/2aacc1f6d2/5/context.md",
       "content_hash": "/71/2aacc1f6d2/5/content_hash.txt",
       "prompt": "/71/2aacc1f6d2/5/prompt.txt"
+    },
+    {
+      "metadata": "/71/2aacc1f6d2/6/metadata.json",
+      "transcript": "/71/2aacc1f6d2/6/full.jsonl",
+      "context": "/71/2aacc1f6d2/6/context.md",
+      "content_hash": "/71/2aacc1f6d2/6/content_hash.txt",
+      "prompt": "/71/2aacc1f6d2/6/prompt.txt"
     }
   ],
   "token_usage": {
-    "input_tokens": 5729,
-    "cache_creation_tokens": 3074529,
-    "cache_read_tokens": 221029302,
-    "output_tokens": 222997,
-    "api_call_count": 2044
+    "input_tokens": 6041,
+    "cache_creation_tokens": 3619364,
+    "cache_read_tokens": 250076323,
+    "output_tokens": 240251,
+    "api_call_count": 2298
   }
 }
